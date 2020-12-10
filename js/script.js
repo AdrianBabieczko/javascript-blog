@@ -1,34 +1,39 @@
-const titleClickHandler = function(event){
+const titleClickHandler = function (event) {
+  event.preventDefault();
+
   const clickedElement = this;
-  console.log('Link was clicked!');
-  
-    /* remove class 'active' from all article links  */
-    const activeLinks = document.querySelectorAll('.titles a.active');
+  console.log("Link was clicked!");
 
-    for (const activeLink of activeLinks) {
-        activeLink.classList.remove('active');
-    }
-  
-    /* add class 'active' to the clicked link */
-    clickedElement.classList.add('active');
-  
-    /* remove class 'active' from all articles */
+  /* remove class 'active' from all article links  */
+  const activeLinks = document.querySelectorAll(".titles a.active");
 
-    const activeArticles = document.querySelectorAll('.post.active');
-
-    for (const activeArticle of activeArticles) {
-        activeArticle.classList.remove('active');
-    }
-  
-    /* get 'href' attribute from the clicked link */
-  
-    /* find the correct article using the selector (value of 'href' attribute) */
-  
-    /* add class 'active' to the correct article */
+  for (const activeLink of activeLinks) {
+    activeLink.classList.remove("active");
   }
-  
-  const links = document.querySelectorAll('.titles a');
-  
-  for(let link of links){
-    link.addEventListener('click', titleClickHandler);
+
+  /* add class 'active' to the clicked link */
+  clickedElement.classList.add("active");
+
+  /* remove class 'active' from all articles */
+  const activeArticles = document.querySelectorAll(".post.active");
+
+  for (const activeArticle of activeArticles) {
+    activeArticle.classList.remove("active");
   }
+
+  /* get 'href' attribute from the clicked link */
+  let attribute = clickedElement.getAttribute("href");
+
+  /* find the correct article using the selector (value of 'href' attribute) */
+  attribute = attribute.replace("#", "");
+  const article = document.getElementById(attribute);
+
+  /* add class 'active' to the correct article */
+  article.classList.add("active");
+};
+
+const links = document.querySelectorAll(".titles a");
+
+for (let link of links) {
+  link.addEventListener("click", titleClickHandler);
+}
