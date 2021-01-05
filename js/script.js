@@ -259,6 +259,4 @@ function authorClickHandler(event){
   addClickListenersToTags();
   generateAuthors();
   addClickListenersToAuthors();
-
-  // some
 }
