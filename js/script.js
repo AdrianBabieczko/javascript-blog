@@ -37,7 +37,8 @@ const optArticleSelector = '.post',
   optArticleAuthorSelector = '.post-author',
   optTagsListSelector = '.tags.list',
   optCloudClassCount = 5,
-  optCloudClassPrefix = 'tag-size-';
+  optCloudClassPrefix = 'tag-size-',
+  optAuthorsListSelector = '.authors';
 
 function generateTitleLinks(customSelector = '') {
   /* remove contents of titleList */
@@ -233,6 +234,9 @@ function addClickListenersToTags(){
 }
 
 function generateAuthors() {
+  /* [NEW] create a new variable allAuthors with an empty object */
+  let allAuthors = {};
+
   /* find all articles */
   const articles = document.querySelectorAll('.post');
 
@@ -249,20 +253,44 @@ function generateAuthors() {
 
     /* generate HTML of the link */
     const linkHTML =
-        ' <a href="#author-' +
-        articleAuthor +
-        '">' +
-        articleAuthor +
-        '</a>';
+            ' <a href="#author-' +
+            articleAuthor +
+            '">' +
+            articleAuthor +
+            '</a>';
 
     /* add generated code to html variable */
     html = html + linkHTML;
+
+    /* [NEW] check if this link is NOT already in allAuthors */
+    if(!allAuthors[articleAuthor]){
+      /* [NEW] add generated code to allAuthors array */
+      allAuthors[articleAuthor] = 1;
+    }
+    else {
+      allAuthors[articleAuthor]++;
+    }
 
     /* insert HTML of all the links into the tags wrapper */
     authorsWrapper.innerHTML = html;
 
     /* END LOOP: for every article: */
   }
+
+  /* [NEW] find list of authorsList in right column */
+  const authorsList = document.querySelector(optAuthorsListSelector);
+
+  /* [NEW] create variable for all links HTML code */
+  let allAuthorsHTML = '';
+
+  /* [NEW] START LOOP: for each tag in all Tags: */
+  for(let author in allAuthors){
+    const authorLinkHTML = '<li><a href="#author-' + author + '">' + author + '</a> ('+ allAuthors[author] + ') </li>';
+
+    allAuthorsHTML+=authorLinkHTML;
+  }
+
+  authorsList.innerHTML = allAuthorsHTML;
 }
 
 function addClickListenersToAuthors(){
