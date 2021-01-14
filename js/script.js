@@ -1,6 +1,7 @@
 const templates = {
   articleLink: Handlebars.compile(document.querySelector('#template-article-link').innerHTML),
-  tagLink: Handlebars.compile(document.querySelector('#template-tag-link').innerHTML)
+  tagLink: Handlebars.compile(document.querySelector('#template-tag-link').innerHTML),
+  authorsLink: Handlebars.compile(document.querySelector('#template-author-link').innerHTML)
 };
 
 const titleClickHandler = function (event) {
@@ -131,7 +132,7 @@ function generateTags(){
     /* START LOOP: for each tag */
     for (const tag of articleTagsArray) {
 
-      const linkHTMLData = {id:tag, tag:tag};
+      const linkHTMLData = {tag:tag};
       const linkHTML = templates.tagLink(linkHTMLData);
 
       html = html + linkHTML;
@@ -246,15 +247,9 @@ function generateAuthors() {
     /* get author from data-author attribute */
     let articleAuthor = article.getAttribute('data-author');
 
-    /* generate HTML of the link */
-    const linkHTML =
-            ' <a href="#author-' +
-            articleAuthor +
-            '">' +
-            articleAuthor +
-            '</a>';
+    const linkHTMLData = {articleAuthor: articleAuthor};
+    const linkHTML = templates.authorsLink(linkHTMLData);
 
-    /* add generated code to html variable */
     html = html + linkHTML;
 
     /* [NEW] check if this link is NOT already in allAuthors */
